@@ -7,7 +7,7 @@ from typing import Optional, Tuple
 from ..youtube import GoogleAuth, YouTube
 from ..config import Config
 
-
+space=" "
 log = logging.getLogger(__name__)
 
 
@@ -31,6 +31,7 @@ class Uploader:
             27: "Education",
             28: "Science & Technology",
             29: "Nonprofits & Activism",
+            42: "Shorts",
         }
 
     async def start(self, progress: callable = None, *args) -> Tuple[bool, str]:
@@ -61,7 +62,7 @@ class Uploader:
                 categoryId = random.choice(list(self.video_category))
 
             categoryName = self.video_category[categoryId]
-            title = self.title if self.title else os.path.basename(self.file)
+            title = self.title if self.title else space
             title = (
                 (Config.VIDEO_TITLE_PREFIX + title + Config.VIDEO_TITLE_SUFFIX)
                 .replace("<", "")
@@ -69,7 +70,7 @@ class Uploader:
             )
             description = (
                 Config.VIDEO_DESCRIPTION
-                + "\nUploaded to YouTube with https://tx.me/youtubeitbot"
+                + "\n"
             )[:5000]
             if not Config.UPLOAD_MODE:
                 privacyStatus = "private"
